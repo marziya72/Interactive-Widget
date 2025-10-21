@@ -1,0 +1,157 @@
+body {
+    margin: 0;
+    background: transparent;
+    overflow: hidden;
+  }
+  
+  img {
+    position: absolute;
+    max-width: 100%;
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  
+  .container {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    background-color: #fbeec100; /* Light background */
+    overflow: hidden;
+  }
+  
+  #receipt {
+    position: absolute;
+    top: -200px; /* Start off-screen */
+    left: 20%;
+    transform: translateX(-50%);
+    opacity: 0;
+    width: 100px;
+    transition: top 1s ease-out, opacity 1s ease-out;
+    pointer-events: none;
+  }
+  
+  #receipt.show {
+    top: 220px;
+    opacity: 1;
+  }
+
+  #receipt.hide {
+    top: -200px;
+    opacity: 0;
+  }
+  
+  #spat {
+    position: absolute;
+    top: 220px;
+    right: 50px;
+    width: 150px;
+    opacity: 0;
+    transform: rotate(-45deg);
+    transition: opacity 0.5s ease, transform 1s ease, left 1s ease, bottom 1s ease;
+    pointer-events: none;
+  }
+  
+  #spat.move {
+    opacity: 1;
+    left: 320px;
+    bottom: 60px;
+    transform: rotate(0deg) translate(-5px, -110px);
+  }
+
+  #spat.move2 {
+    opacity: 1;
+    left: 280px;
+    bottom: 40px;
+    transform: rotate(0deg) translate(-10px, -100px);
+  }
+
+  #spat.move3 {
+    opacity: 1;
+    left: 385px;
+    bottom: 20px;
+    transform: rotate(0deg) translate(-18px, -92px);
+  }
+  #spat.move4 {
+    opacity: 1;
+    left: 320px;
+    bottom: 0px;
+    transform: rotate(0deg) translate(0px, -82px);
+  }
+  
+  #vanilla {
+    position: absolute;
+    bottom: 200px;
+    left: 300px;
+    width: 100px;
+    transition: bottom 1s ease;
+    pointer-events: none;
+  }
+  
+  #vanilla.lift {
+    bottom: 310px;
+  }
+  
+  #strawb {
+    position: absolute;
+    bottom: 183px;
+    left: 350px;
+    width: 100px;
+    transition: bottom 1s ease;
+    pointer-events: none;
+  }
+  #strawb.lift {
+    bottom: 293px;
+  }
+
+  #matcha {
+    position: absolute;
+    bottom: 188px;
+    left: 254px;
+    width: 100px;
+    transition: bottom 1s ease;
+    pointer-events: none;
+  }
+  #matcha.lift {
+    bottom: 298px;
+  }
+
+  #mango {
+    position: absolute;
+    bottom: 173px;
+    left: 303px;
+    width: 100px;
+    transition: bottom 1s ease;
+    pointer-events: none;
+  }
+  #mango.lift {
+    bottom: 283px;
+  }
+
+  #tray {
+    position: absolute;
+    bottom: 140px;
+    left: 205px;
+    width: 300px;
+  }
+
+  #line {
+    position: absolute;
+    top: 230px;
+    left: 60px;
+    width: 200px;
+  }
+
+  #menu {
+    position: absolute;
+    top: 220px;
+    left: 255px;
+    width: 150px;
+  }
+  
+  .hidden {
+    opacity: 0;
+  }
+  
+  .visible {
+    opacity: 1;
+  }
+  

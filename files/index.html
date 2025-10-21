@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Animation</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/comfy.js@latest/dist/comfy.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <img id="line" src="line.png" class="line" />
+    <img id="menu" src="menu.png" class="menu" />
+    <img id="receipt" src="receipt.png" class="hidden" />
+    <img id="tray" src="tray.png" class="tray" />
+    <img id="spat" src="spat.png" class="spat" />
+    <img id="vanilla" src="vanilla.png" class="vanilla" />
+    <img id="matcha" src="matcha.png" class="matcha" />
+    <img id="strawb" src="strawb.png" class="strawb" />
+    <img id="mango" src="mango.png" class="mango" />
+  </div>
+
+  <!-- Buttons -->
+  <button onclick="play()" style="position: absolute; top: 10px; right: 10px; z-index: 10;">▶️ Vanilla</button>
+  <button onclick="play2()" style="position: absolute; top: 60px; right: 10px; z-index: 10;">▶️ Matcha</button>
+  <button onclick="play3()" style="position: absolute; top: 110px; right: 10px; z-index: 10;">▶️ Strawb</button>
+  <button onclick="play4()" style="position: absolute; top: 160px; right: 10px; z-index: 10;">▶️ Mango</button>
+
+  <!-- Your animation logic -->
+  <script src="script.js"></script>
+
+  <script>
+    let userOrders = JSON.parse(localStorage.getItem("userOrders") || "{}");
+    let isRunning = false;
+
+    if (typeof ComfyJS === 'undefined') {
+      console.error('ComfyJS failed to load!');
+    } else {
+      //ComfyJS.Init("removed for confidentiality");
+
+      const actions = [
+        { fn: play,   name: "Vanilla"    },
+        { fn: play2,  name: "Matcha"     },
+        { fn: play3,  name: "Strawberry" },
+        { fn: play4,  name: "Mango"      },
+      ];
+
+      function handleOrder(user) {
+        if (isRunning) return;
+        isRunning = true;
+
+        // Increment user's daily order count
+        userOrders[user] = (userOrders[user] || 0) + 1;
+        localStorage.setItem("userOrders", JSON.stringify(userOrders));
+        const totalOrders = userOrders[user];
+
+        // Pick a random flavor and run animation
+        const choice = actions[Math.floor(Math.random() * actions.length)];
+        choice.fn();
+
+        // Send chat message with flavor and count
+        ComfyJS.Say(`!o ${user} has ordered their daily slice of ${choice.name} Tiramisu! Total orders: ${totalOrders}`);
+
+        // Cooldown before next order can run
+        setTimeout(() => {
+          isRunning = false;
+        }, 4000);
+      }
+
+      // Handle real channel point redemptions
+      ComfyJS.onReward = (user, reward, cost, message, extra) => {
+        if (reward.toLowerCase() !== "tiramisu slice") return;
+        handleOrder(user);
+      };
+
+      // Handle chat commands, e.g. triggered by Mix It Up
+      ComfyJS.onCommand = (user, command, message, flags, extra) => {
+        if (command.toLowerCase() === "o") {
+          handleOrder(user);
+        }
+      };
+
+      // Optional manual test function for local dev
+      window.test = () => {
+        // Simulate command "!o" from TestUser
+        ComfyJS.onCommand("TestUser", "o", "", {}, {});
+      };
+    }
+  </script>
+</body>
+</html>
